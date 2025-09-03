@@ -1,13 +1,9 @@
 package SirMossen;
 
-import java.util.Map;
-
 class Country2 {
     private int area, population;
     private String language, name;
 
-    // Constructor For Country Class Data input That Will store as an Object In entries
-    // Array of HashTable Class
     Country2(int area, int population, String name, String language) {
         this.name = name;
         this.language = language;
@@ -15,8 +11,6 @@ class Country2 {
         this.population = population;
     }
 
-    // Making TOString So when Ever We Want to Print the Value (Object If a Country Class)
-    // Placed In the Array
     public String toString() {
         StringBuffer build = new StringBuffer();
         build.append("\t\t\tData Start\n");
@@ -30,11 +24,11 @@ class Country2 {
     }
 }
 
-public class HashTable2 implements Map {
+public class HashTable2 {
     private Entry[] entries;
     private int size, used;
     private float loadFactor;
-    private final Entry NIL = new Entry(null, null); // Fixed: Use Entry class, not Map.Entry
+    private final Entry NIL = new Entry(null, null);
 
     public HashTable2(int capacity, float loadFactor) {
         entries = new Entry[capacity];
@@ -71,16 +65,16 @@ public class HashTable2 implements Map {
                 entries[j] = new Entry(key, value);
                 ++size;
                 ++used;
-                return null; // insertion success
+                return null;
             }
             if (entry == NIL) continue;
             if (entry.key.equals(key)) {
                 Object oldValue = entry.value;
                 entries[j].value = value;
-                return oldValue; // update success
+                return oldValue;
             }
         }
-        return null; // failure; table overflow
+        return null;
     }
 
     public Object remove(Object key) {
@@ -94,10 +88,10 @@ public class HashTable2 implements Map {
                 Object oldValue = entry.value;
                 entries[j] = NIL;
                 --size;
-                return oldValue; // success
+                return oldValue;
             }
         }
-        return null; // failure; key not found
+        return null;
     }
 
     public int size() {
@@ -139,7 +133,6 @@ public class HashTable2 implements Map {
         }
     }
 
-    // Required Map interface methods (simplified implementations)
     public boolean isEmpty() {
         return size == 0;
     }
@@ -153,36 +146,12 @@ public class HashTable2 implements Map {
         size = 0;
         used = 0;
     }
-
-    // Other Map interface methods would need to be implemented
-    // For simplicity, I'm providing minimal implementations
-
-    public java.util.Set entrySet() {
-        throw new UnsupportedOperationException();
-    }
-
-    public java.util.Set keySet() {
-        throw new UnsupportedOperationException();
-    }
-
-    public void putAll(Map m) {
-        throw new UnsupportedOperationException();
-    }
-
-    public boolean containsValue(Object value) {
-        throw new UnsupportedOperationException();
-    }
-
-    public java.util.Collection values() {
-        throw new UnsupportedOperationException();
-    }
 }
+
 class Main8 {
     public static void main(String[] args) {
-        // Create the hash table
         HashTable2 table = new HashTable2();
 
-        // Create countries (note: using Country2, not Country)
         Country2 pk = new Country2(1209, 1000, "Pakistan", "Urdu");
         Country2 in = new Country2(17909, 145000, "India", "Hindi");
         Country2 cn = new Country2(9596961, 1412000000, "China", "Mandarin");
@@ -190,7 +159,6 @@ class Main8 {
         Country2 uk = new Country2(243610, 67000000, "UK", "English");
         Country2 sa = new Country2(2149690, 36000000, "Saudi Arabia", "Arabic");
 
-        // pushing 6 countries into hashtable using put() method
         table.put("PK", pk);
         table.put("IN", in);
         table.put("CN", cn);
@@ -198,7 +166,6 @@ class Main8 {
         table.put("UK", uk);
         table.put("SA", sa);
 
-        // printing from hashtable using get() method
         System.out.println(table.get("PK"));
         System.out.println(table.get("IN"));
         System.out.println(table.get("CN"));
@@ -208,7 +175,6 @@ class Main8 {
 
         System.out.println("Total Entries = " + table.size());
 
-        // Test remove operation
         System.out.println("\nRemoving UK entry...");
         table.remove("UK");
         System.out.println("UK entry after removal: " + table.get("UK"));
