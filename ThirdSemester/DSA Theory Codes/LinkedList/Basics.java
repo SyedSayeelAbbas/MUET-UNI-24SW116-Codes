@@ -9,6 +9,11 @@ public class Node {
     public Node2(int data){
         this.data=data;
     }
+    //make a double argument Constructor if needed
+    public Node2(int data,Node2 next){
+        this.data=data;
+        this.next=next;
+    }
 }
 
 class Main{
