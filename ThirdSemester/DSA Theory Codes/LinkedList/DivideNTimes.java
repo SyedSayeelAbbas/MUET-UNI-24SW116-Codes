@@ -4,52 +4,51 @@ class Node {
     Node next;
     int data;
 
-    public Node(int data) {
+    Node(int data) {
         this.data = data;
     }
 
-    public int count(Node start) {
-        int c = 0;
-        for (Node i = start; i != null; i = i.next) {
-            c++;
-        }
-        return c;
+    Node(int data, Node next) {
+        this.data = data;
+        this.next = next;
     }
 
-    // Divide into n parts
-    public Node[] divideN(Node start, int n) {
-        if (start == null || n <= 0) return new Node[0];
+    public Node[] divideInNTimes(Node start, int n) {
+        Node[] result = new Node[n];
+        if (start == null || n <= 0) return result;
 
-        int total = count(start);
-        Node[] allNodes = new Node[total];
-        int idx = 0;
+        // count total nodes
+        int total = 0;
         for (Node p = start; p != null; p = p.next) {
-            allNodes[idx++] = p;
+            total++;
         }
 
-        // Base size of each part
         int baseSize = total / n;
-        int extra = total % n;  // distribute remainder
+        int extra = total % n; // distribute remainder
 
-        Node[] result = new Node[n];
-        int pos = 0;
-        for (int i = 0; i < n; i++) {
-            if (pos < total) {
-                result[i] = allNodes[pos];
-                int size = baseSize + (i < extra ? 1 : 0); // some parts get +1
-                pos += size;
-                if (pos <= total - 1) {
-                    allNodes[pos - 1].next = null; // break link
-                }
-            } else {
-                result[i] = null; // if more parts than nodes
+        Node curr = start;
+        for (int i = 0; i < n && curr != null; i++) {
+            result[i] = curr; // head of current part
+
+            int size = baseSize + (i < extra ? 1 : 0); // first 'extra' parts get +1 node
+
+            // move (size - 1) steps forward
+            for (int j = 1; j < size && curr != null; j++) {
+                curr = curr.next;
+            }
+
+            // cut the list
+            if (curr != null) {
+                Node nextNode = curr.next;
+                curr.next = null;
+                curr = nextNode;
             }
         }
         return result;
     }
 }
 
-public class DivideNTimes {
+public class Divider {
     public static void main(String[] args) {
         Node start = new Node(1);
         start.next = new Node(2);
@@ -60,10 +59,10 @@ public class DivideNTimes {
         start.next.next.next.next.next.next = new Node(7);
 
         Node obj = new Node(0); // dummy to call method
-        Node[] parts = obj.divideN(start, 3); // divide into 3 parts
+        Node[] parts = obj.divideInNTimes(start, 3); // divide into 3 parts
 
         for (int i = 0; i < parts.length; i++) {
-            System.out.println("Part " + (i + 1) + ":");
+            System.out.print("Part " + (i + 1) + ": ");
             for (Node p = parts[i]; p != null; p = p.next) {
                 System.out.print(p.data + " ");
             }
