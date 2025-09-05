@@ -10,40 +10,42 @@ class Node {
         this.data = data;
     }
 
+    // Count nodes
     public int count(Node start) {
         int c = 0;
         for (Node i = start; i != null; i = i.next) c++;
         return c;
     }
 
+    // Easy shuffle
     public Node shuffle(Node start) {
-        int mid = count(start) / 2;
+        if (start == null) return null;
+
+        // Step 1: Copy list into array
+        int n = count(start);
+        int[] arr = new int[n];
         Node p = start;
-        int[] part1 = new int[mid];
-        int[] part2 = new int[count(start) - mid];
-
-        for (int i = 0; i < mid; i++) {
-            part1[i] = p.data;
-            p = p.next;
-        }
-        for (int i = 0; i < part2.length; i++) {
-            part2[i] = p.data;
+        for (int i = 0; i < n; i++) {
+            arr[i] = p.data;
             p = p.next;
         }
 
+        // Step 2: Fisher–Yates shuffle
         Random rand = new Random();
+        for (int i = n - 1; i > 0; i--) {
+            int j = rand.nextInt(i + 1);
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+
+        // Step 3: Copy back into list
         p = start;
-        int i = 0, j = 0;
-        while (p != null) {
-            if (rand.nextBoolean() && i < part1.length) {
-                p.data = part1[i++];
-            } else if (j < part2.length) {
-                p.data = part2[j++];
-            } else if (i < part1.length) {
-                p.data = part1[i++];
-            }
+        for (int i = 0; i < n; i++) {
+            p.data = arr[i];
             p = p.next;
         }
+
         return start;
     }
 }
@@ -54,6 +56,7 @@ public class ShufflingMethod {
         start.next = new Node(2);
         start.next.next = new Node(3);
         start.next.next.next = new Node(4);
+        start.next.next.next.next = new Node(5);
 
         start = start.shuffle(start);
 
