@@ -43,6 +43,15 @@ public class HashTable2 {
         this(101);
     }
 
+    class Entry{
+        Object value,key;
+
+        Entry(Object key,Object value){
+            this.key=key;
+            this.value=value;
+        }
+    }
+
     public Object get(Object key) {
         int h = hash(key);
         for (int i = 0; i < entries.length; i++) {
@@ -181,3 +190,4 @@ class Main8 {
         System.out.println("Total Entries after removal = " + table.size());
     }
 }
+
