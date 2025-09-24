@@ -24,3 +24,8 @@ This project was built using **Object-Oriented Programming (OOP)** concepts and 
 ---
 
 ## 📂 Project Structure
+FitnessStatsTracker.java
+│
+├── FitnessUser class → Stores user details
+├── FitnessStatsTracker class → Main tracker logic
+└── main() method → Demonstrates features
