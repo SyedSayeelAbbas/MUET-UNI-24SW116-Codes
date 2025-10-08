@@ -1,128 +1,306 @@
 import java.util.*;
+import java.io.*;
+import java.time.LocalDate;
 
-// A simple class to store details of each fitness user
-class FitnessUser {
-    private String id;
-    private String personName;
-    private double bmi;
-    private int calories;
-    private String workout; // Cardio, Strength, Yoga, etc.
+class UserFitnessStats {
 
-    // constructor
-    public FitnessUser(String id, String personName, double bmi, int calories, String workout) {
-        this.id = id;
-        this.personName = personName;
-        this.bmi = bmi;
-        this.calories = calories;
-        this.workout = workout;
+    // Enum for workout types (safer than Strings)
+    public enum WorkoutType {
+        Cardio, Strength, Yoga, HIIT, Cycling, Walking
     }
 
-    // getters
-    public String getId() {
-        return id;
+    // All the User Stats
+    private String userId, name;
+    private WorkoutType workoutType;
+    private int age, duration; // duration in minutes
+    private double height, weight, caloriesBurned, bmi;
+
+    // Constructor
+    public UserFitnessStats(String userId, String name, WorkoutType workoutType,
+                            int age, int duration, double height, double weight) {
+
+        if (height <= 0 || weight <= 0 || duration <= 0 || age <= 0) {
+            throw new IllegalArgumentException("Invalid input: Height, weight, age and duration must be positive.");
+        }
+
+        this.userId = userId;
+        this.name = name;
+        this.workoutType = workoutType;
+        this.age = age;
+        this.duration = duration;
+        this.height = height;
+        this.weight = weight;
+
+        // Automatic calculations
+        this.bmi = calculateBMI();
+        this.caloriesBurned = calculateCaloriesBurned();
     }
 
-    public double getBmi() {
-        return bmi;
+    // All Getters
+    public String getUserId() { return userId; }
+    public String getName() { return name; }
+    public WorkoutType getWorkoutType() { return workoutType; }
+    public int getAge() { return age; }
+    public int getDuration() { return duration; }
+    public double getHeight() { return height; }
+    public double getWeight() { return weight; }
+    public double getBMI() { return bmi; }
+    public double getCaloriesBurned() { return caloriesBurned; }
+
+    // BMI Calculation (fixed formula)
+    private double calculateBMI() {
+        double heightInMeters = this.height * 0.3048; // convert feet to meters
+        return this.weight / (heightInMeters * heightInMeters);
     }
 
-    public int getCalories() {
-        return calories;
+    // MET Calculation with multipliers
+    private double getMET(WorkoutType type) {
+        double baseMET;
+
+        switch (type) {
+            case Cardio:   baseMET = 7.0; break;
+            case Strength: baseMET = 6.0; break;
+            case Yoga:     baseMET = 3.0; break;
+            case HIIT:     baseMET = 9.0; break;
+            case Cycling:  baseMET = 8.0; break;
+            case Walking:  baseMET = 4.0; break;
+            default:
+                throw new IllegalStateException("Invalid workout type");
+        }
+
+        // Age multiplier
+        double ageMultiplier;
+        if (age < 25) ageMultiplier = 1.05;
+        else if (age <= 35) ageMultiplier = 1.00;
+        else if (age <= 45) ageMultiplier = 0.98;
+        else if (age <= 60) ageMultiplier = 0.95;
+        else ageMultiplier = 0.92;
+
+        // BMI multiplier
+        double bmiMultiplier;
+        if (bmi < 18.5) bmiMultiplier = 0.95;
+        else if (bmi <= 24.9) bmiMultiplier = 1.00;
+        else if (bmi <= 29.9) bmiMultiplier = 1.10;
+        else bmiMultiplier = 1.15;
+
+        return baseMET * ageMultiplier * bmiMultiplier;
     }
 
-    public String getWorkout() {
-        return workout;
+    // Calories burned calculation
+    private double calculateCaloriesBurned() {
+        double met = getMET(this.workoutType);
+        // formula: MET × Weight (kg) × Duration (hours)
+        double hours = this.duration / 60.0;
+        return met * this.weight * hours;
     }
 
+    // BMI Category (optional but nice for UI)
+    public String getBMICategory() {
+        if (bmi < 18.5) return "Underweight";
+        if (bmi <= 24.9) return "Normal";
+        if (bmi <= 29.9) return "Overweight";
+        return "Obese";
+    }
+
+    // ToString (clean output)
     @Override
     public String toString() {
-        return "User ID: " + id +
-                "\nName: " + personName +
-                "\nBMI: " + bmi +
-                "\nCalories Burned: " + calories +
-                "\nWorkout Type: " + workout +
-                "\n---------------------------";
+        StringBuilder s = new StringBuilder();
+        s.append("****** User Fitness Details ******\n");
+        s.append("User ID: ").append(userId).append("\n");
+        s.append("Name: ").append(name).append("\n");
+        s.append("Workout Type: ").append(workoutType).append("\n");
+        s.append("Age: ").append(age).append(" years\n");
+        s.append("Duration: ").append(duration).append(" min\n");
+        s.append("Height: ").append(String.format("%.2f", height)).append(" ft\n");
+        s.append("Weight: ").append(String.format("%.2f", weight)).append(" kg\n");
+        s.append("BMI: ").append(String.format("%.2f", bmi)).append(" (").append(getBMICategory()).append(")\n");
+        s.append("Calories Burned: ").append(String.format("%.2f", caloriesBurned)).append(" kcal\n");
+        s.append("***********************************");
+        return s.toString();
     }
 }
 
-// Main tracker class
+class Session {
+    private String workoutType;
+    private int duration; // in minutes
+    private double caloriesBurned;
+    private double bmi;
+    private LocalDate date;
+    private static int sessionCounter = 0;
+    private int sessionId;
+
+    public Session(String workoutType, int duration, double caloriesBurned, double bmi) {
+        this.sessionId = ++sessionCounter;
+        this.workoutType = workoutType;
+        this.duration = duration;
+        this.caloriesBurned = caloriesBurned;
+        this.bmi = bmi;
+        this.date = LocalDate.now();
+    }
+
+    // Getters and setters
+    public int getSessionId() { return sessionId; }
+    public String getWorkoutType() { return workoutType; }
+    public int getDuration() { return duration; }
+    public double getCaloriesBurned() { return caloriesBurned; }
+    public double getBmi() { return bmi; }
+    public LocalDate getDate() { return date; }
+}
+
+
+
+
 public class FitnessStatsTracker {
-    // storing all users using HashMap for quick searching
-    private HashMap<String, FitnessUser> users = new HashMap<>();
-    // we keep a list of BMIs separately for avg calculation
-    private ArrayList<Double> bmiValues = new ArrayList<>();
+    private HashMap<String, UserFitnessStats> userMap = new HashMap<>();
+    private ArrayList<Session> sessions = new ArrayList<>();
 
-    // add new user
-    public void addUser(FitnessUser u) {
-        users.put(u.getId(), u);
-        bmiValues.add(u.getBmi());
+    //Add a new user
+    public void addUser(UserFitnessStats user) {
+        userMap.put(user.getUserId(), user);
+        System.out.println("User added successfully: " + user.getName());
     }
 
-    // search a user by their ID
-    public FitnessUser findUser(String id) {
-        return users.get(id);
-    }
-
-    // calculate avg BMI of all users
-    public double averageBmi() {
-        if (bmiValues.size() == 0) return 0;
-        double total = 0;
-        for (double b : bmiValues) {
-            total = total + b;
+    //Search user by ID
+    public UserFitnessStats searchUserById(String userId) {
+        UserFitnessStats user = userMap.get(userId);
+        if (user == null) {
+            System.out.println("User not found.");
+            return null;
         }
-        return total / bmiValues.size();
+        System.out.println(user);
+        return user;
     }
 
-    // show all users who burned more than given calories
-    public void showHighCalories(int minCal) {
-        System.out.println("\nUsers who burned more than " + minCal + " calories:");
-        for (FitnessUser u : users.values()) {
-            if (u.getCalories() > minCal) {
-                System.out.println(u);
+    //Average BMI calculation
+    public double calculateAverageBMI() {
+        if (userMap.isEmpty()) return 0;
+        double totalBmi = 0;
+        for (UserFitnessStats user : userMap.values()) {
+            totalBmi += user.getBMI();
+        }
+        return totalBmi / userMap.size();
+    }
+
+    //Filter users by calories burned
+    public void displayUsersByCalories(double minCalories) {
+        boolean found = false;
+        for (UserFitnessStats user : userMap.values()) {
+            if (user.getCaloriesBurned() > minCalories) {
+                System.out.println(user);
+                found = true;
             }
         }
+        if (!found) System.out.println("No users found above " + minCalories + " calories.");
     }
 
-    // count how many users are in each workout type
-    public void workoutStats() {
-        HashMap<String, Integer> counter = new HashMap<>();
-        for (FitnessUser u : users.values()) {
-            String type = u.getWorkout();
-            if (counter.containsKey(type)) {
-                counter.put(type, counter.get(type) + 1);
-            } else {
-                counter.put(type, 1);
+    // Add new session
+    public void addSession(String userId) {
+        UserFitnessStats user = userMap.get(userId);
+        if (user != null) {
+            Session newSession = new Session(
+                    user.getWorkoutType().toString(),
+                    user.getDuration(),
+                    user.getCaloriesBurned(),
+                    user.getBMI()
+            );
+            sessions.add(newSession);
+            System.out.println("Session added for " + user.getName() + " on " + newSession.getDate());
+        } else {
+            System.out.println("User not found.");
+        }
+    }
+
+    // Remove session by index (ID alternative)
+    public void removeSession(int index) {
+        if (index >= 0 && index < sessions.size()) {
+            sessions.remove(index);
+            System.out.println(" Session removed successfully.");
+        } else {
+            System.out.println("Invalid session index.");
+        }
+    }
+
+    // Update stats if user logs another workout (recalculate BMI & calories)
+    public void updateUserWorkout(String userId, int newDuration, double newWeight) {
+        UserFitnessStats user = userMap.get(userId);
+        if (user != null) {
+            // Create new object with updated values
+            UserFitnessStats updatedUser = new UserFitnessStats(
+                    user.getUserId(),
+                    user.getName(),
+                    user.getWorkoutType(),
+                    user.getAge(),
+                    newDuration,
+                    user.getHeight(),
+                    newWeight
+            );
+            userMap.put(userId, updatedUser);
+            System.out.println("Stats updated for " + updatedUser.getName());
+        } else {
+            System.out.println("User not found.");
+        }
+    }
+
+    //  Top performer ranking (sort users by calories burned)
+    public void displayTopPerformers() {
+        List<UserFitnessStats> sorted = new ArrayList<>(userMap.values());
+        sorted.sort((a, b) -> Double.compare(b.getCaloriesBurned(), a.getCaloriesBurned()));
+
+        System.out.println("🏆 Top Performers:");
+        int rank = 1;
+        for (UserFitnessStats u : sorted) {
+            System.out.println(rank + ". " + u.getName() + " - " + u.getCaloriesBurned() + " kcal");
+            rank++;
+        }
+    }
+
+    //  Count users per workout type
+    public void countUsersPerWorkoutType() {
+        HashMap<String, Integer> countMap = new HashMap<>();
+        for (UserFitnessStats user : userMap.values()) {
+            String type = user.getWorkoutType().toString();
+            countMap.put(type, countMap.getOrDefault(type, 0) + 1);
+        }
+
+        System.out.println(" Users per workout type:");
+        for (Map.Entry<String, Integer> entry : countMap.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+    }
+
+    //  Save all data to file (CSV / text)
+    public void saveDataToFile(String fileName) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
+            writer.println("UserID,Name,WorkoutType,Age,Duration,Height,Weight,BMI,Calories");
+            for (UserFitnessStats user : userMap.values()) {
+                writer.println(user.getUserId() + "," + user.getName() + "," + user.getWorkoutType() + "," +
+                        user.getAge() + "," + user.getDuration() + "," + user.getHeight() + "," +
+                        user.getWeight() + "," + user.getBMI() + "," + user.getCaloriesBurned());
             }
-        }
-        System.out.println("\nUsers per workout type:");
-        for (String t : counter.keySet()) {
-            System.out.println(t + ": " + counter.get(t));
+            System.out.println(" Data saved to " + fileName);
+        } catch (IOException e) {
+            System.out.println(" Error saving data: " + e.getMessage());
         }
     }
 
-    // main testing
-    public static void main(String[] args) {
-        FitnessStatsTracker tracker = new FitnessStatsTracker();
-
-        // adding sample data
-        tracker.addUser(new FitnessUser("U101", "Ali", 22.5, 400, "Cardio"));
-        tracker.addUser(new FitnessUser("U102", "Sara", 25.1, 600, "Strength"));
-        tracker.addUser(new FitnessUser("U103", "John", 20.7, 300, "Yoga"));
-        tracker.addUser(new FitnessUser("U104", "Maria", 28.2, 700, "Cardio"));
-        tracker.addUser(new FitnessUser("U105", "Omar", 23.9, 550, "Strength"));
-
-        // testing search
-        System.out.println("Looking for user U102:");
-        System.out.println(tracker.findUser("U102"));
-
-        // testing avg BMI
-        System.out.println("\nAverage BMI of all users: " + tracker.averageBmi());
-
-        // testing calories filter
-        tracker.showHighCalories(500);
-
-        // testing workout counter
-        tracker.workoutStats();
+    //  Session list with correct date
+    public void showAllSessions() {
+        if (sessions.isEmpty()) {
+            System.out.println("No sessions recorded.");
+            return;
+        }
+        int index = 0;
+        for (Session s : sessions) {
+            System.out.println("Session #" + index);
+            System.out.println("Workout: " + s.getWorkoutType());
+            System.out.println("Duration: " + s.getDuration() + " min");
+            System.out.println("Calories: " + s.getCaloriesBurned());
+            System.out.println("BMI: " + s.getBmi());
+            System.out.println("Date: " + s.getDate());
+            System.out.println("-----------------------------");
+            index++;
+        }
     }
 }
 
