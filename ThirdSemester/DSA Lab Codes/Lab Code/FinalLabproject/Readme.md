@@ -1,10 +1,6 @@
-🏋️ Java Fitness Tracker
+🏋️ 🚀 JAVA FITNESS TRACKER — Your Smart Workout Companion! 💪
 
-“Track your workouts. Know your numbers. Be your best.” 💪
-
-
-A lightweight, console-based fitness tracker built with pure Java ☕.
-This project helps users track workouts, calculate BMI, estimate calories burned, and analyze performance — all using simple, clean code designed to practice DSA + OOP concepts.
+A simple yet powerful Java-based fitness tracking system to log sessions, calculate stats like BMI & calories burned, rank top performers, and keep your fitness journey organized.
 
 ✨ Why This Project?
 
