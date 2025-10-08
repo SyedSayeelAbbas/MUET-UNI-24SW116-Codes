@@ -1,91 +1,109 @@
-# 🏋️ Java Fitness Tracker
+🏋️ Java Fitness Tracker
 
-A simple **Fitness Tracking Application** written in **Java** that helps users track their **workouts, BMI, calories burned**, and session history.  
-This project is designed to practice **OOP**, **ArrayList**, and **file handling** concepts in Java.
+A simple Fitness Tracking Application written in Java that helps users track their workouts, BMI, calories burned, and session history.
+This project is designed to practice OOP, ArrayList, and file handling concepts in Java.
 
----
+📌 Features
+👤 User Management
 
-## 📌 Features
+Add, update, or remove users
 
-- 👤 **User Management**
-  - Add, update, or remove users
-  - Automatically calculate **BMI** on registration
-  - Automatically calculate **calories burned** based on:
-    - Workout type
-    - Age group
-    - BMI multiplier
-    - Duration
+Automatically calculate BMI on registration
 
-- 📝 **Workout Session Management**
-  - Add new workout sessions
-  - Auto-stamp sessions with the **current date**
-  - Store sessions using **ArrayList**
-  - Remove sessions by ID or index
-  - List all sessions with dates
+Automatically calculate calories burned based on:
 
-- 🧮 **Statistics & Reports**
-  - Search user by ID
-  - Calculate **Average BMI**
-  - Filter users by **calories burned**
-  - Rank top performers 🥇
-  - Count users per workout type
-  - Save data to file for persistence
+Workout type
 
-- 🕒 **Age & BMI Multiplier Logic**
-  - Age < 25 → multiplier = `1.05` (higher burn rate)
-  - Age > 45 → multiplier = `0.95` (lower burn rate)
-  - BMI > 25  → multiplier = `1.1` (higher burn rate)
+Age group
 
----
+BMI multiplier
 
-## 🧱 Project Structure
+Duration
+
+📝 Workout Session Management
+
+Add new workout sessions
+
+Auto-stamp sessions with the current date
+
+Store sessions using ArrayList
+
+Remove sessions by ID or index
+
+List all sessions with dates
+
+🧮 Statistics & Reports
+
+Search user by ID
+
+Calculate Average BMI
+
+Filter users by calories burned
+
+Rank top performers 🥇
+
+Count users per workout type
+
+Save data to file for persistence
+
+🕒 Age & BMI Multiplier Logic
+Condition	Multiplier
+Age < 25	1.05
+Age > 45	0.95
+BMI > 25	1.10
+🧱 Project Structure
 📁 FitnessTrackerProject
-├── 📄 UserFitnessStats.java # Stores user info, BMI & calories logic
-├── 📄 Session.java # Stores session details with date
-├── 📄 FitnessStatsTracker.java # All core operations (CRUD, search, filter, stats)
-├── 📄 Main.java # Runs the program with a simple menu
-├── 📄 users_data.txt # Saved user data
+├── 📄 UserFitnessStats.java        # Stores user info, BMI & calories logic
+├── 📄 Session.java                 # Stores session details with date
+├── 📄 FitnessStatsTracker.java     # Core operations (CRUD, search, filter, stats)
+├── 📄 Main.java                    # Runs the program with a console menu
+├── 📄 users_data.txt               # Saved user data
 └── 📄 README.md
 
+🧮 Formula Used
+BMI
+BMI
+=
+Weight (kg)
+(Height (m))
+2
+BMI=
+(Height (m))
+2
+Weight (kg)
+	​
 
----
-
-## 🧮 Formula Used
-
-### BMI:
-\[
-\text{BMI} = \frac{\text{Weight (kg)}}{\text{(Height (m))}^2}
-\]
-
-### Calories Burned:
-\[
-\text{Calories} = \text{MET} \times \text{Weight (kg)} \times \text{Duration (hours)} \times \text{Multiplier}
-\]
+Calories Burned
+Calories
+=
+MET
+×
+Weight (kg)
+×
+Duration (hours)
+×
+Multiplier
+Calories=MET×Weight (kg)×Duration (hours)×Multiplier
 
 Where:
-- MET depends on **Workout Type**
-- Multiplier depends on **Age & BMI**
 
----
+MET depends on Workout Type
 
-## 🏃 Workout Types & MET Values
+Multiplier depends on Age & BMI
 
-| Workout Type | MET |
-|--------------|-----|
-| Running      | 8.0 |
-| Cycling      | 6.0 |
-| Walking      | 3.0 |
-| Strength     | 5.0 |
-| Yoga         | 2.5 |
-
----
-
+🏃 Workout Types & MET Values
+Workout Type	MET
+Running	8.0
+Cycling	6.0
+Walking	3.0
+Strength	5.0
+Yoga	2.5
 🧠 Main Class – Program Entry Point
 
 The Main class acts as the console-based interface of the Fitness Stats Tracker.
 It allows users to interact with the system through a simple, numbered menu.
 
-✨ Features of Main Class
+✨ Features
 
 🆕 Add new users
 
@@ -227,6 +245,7 @@ public class Main {
         sc.close();
     }
 }
+
 🧪 Sample Run
 ================= 🏋️ FITNESS TRACKER MENU =================
 1️⃣  Add New User
@@ -245,94 +264,68 @@ public class Main {
 👉 Enter your choice: 1
 Enter User ID: U001
 Enter Name: Sayeel
-Workout Types: Cardio, Strength, Yoga, HIIT, Cycling, Walking
-Enter Workout Type: Cardio
-Enter Age: 20
-Enter Duration (minutes): 45
-Enter Height (in feet): 6.3
-Enter Weight (in kg): 108.3
+Workout Type: Cardio
+Age: 20
+Duration: 45 min
+Height: 6.3 ft
+Weight: 108.3 kg
 ✅ User added successfully!
-🧠 Notes
 
-The program runs in a continuous loop until the user chooses 0 to exit.
+💾 Data Persistence
 
-Each menu option directly interacts with the FitnessStatsTracker class.
-
-Data can be saved to a file for later use.
-
-✅ This structure makes the program modular, easy to navigate, and extendable for future features.
-
-## 🖥️ Example Usage (Console)
-
-Enter 1 to Add User
-Enter 2 to Add Session
-Enter 3 to View All Users
-Enter 4 to Filter by Calories
-Enter 5 to Show Top Performers
-Enter 6 to Save Data
-Enter 0 to Exit
-
-
----
-
-## 💾 Data Persistence
-
-The application saves all **user data** in a `.txt` file so it can be retrieved later even after closing the program.  
+The application saves all user data in a .txt file so it can be retrieved later even after closing the program.
 Sessions can also be exported optionally.
 
----
+🚀 Tech Stack
 
-## 🚀 Tech Stack
+Language: Java (JDK 17+)
 
-- **Language:** Java (JDK 17+)
-- **Concepts Used:** 
-  - OOP (Classes, Objects, Encapsulation)
-  - Inheritance & Composition
-  - ArrayList & Loops
-  - File Handling
-  - Date API (`LocalDate`)
+Concepts Used:
 
----
+OOP (Classes, Objects, Encapsulation)
 
-## 🧑‍💻 Author
+Inheritance & Composition
 
-**Syed Sayeel Abbas**  
-📚 Software Engineering Student (2nd Semester)  
-💻 Passionate about learning Java, OOP & Web Development
+ArrayList & Loops
 
----
+File Handling
 
-## 📝 License
+Java Time API (LocalDate)
 
-This project is open source and available under the [MIT License](LICENSE).
+🧑‍💻 Author
 
----
+Syed Sayeel Abbas
+📚 Software Engineering Student (2nd Semester)
+💻 Passionate about Java, OOP & Web Development
 
-## ⭐ How to Run
+📝 License
 
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/SyedSayeelAbbas/MUET-UNI-24SW116-Codes.git
-2. Open the project in any IDE (IntelliJ / VS Code / Eclipse)
+This project is open source and available under the MIT License
+.
 
-3. Navigate To :
-    ThirdSemester/DSA Lab Codes/Lab Code/FinalLabproject/
+⭐ How to Run
+# 1. Clone the repo
+git clone https://github.com/SyedSayeelAbbas/MUET-UNI-24SW116-Codes.git
 
+# 2. Open the project in any IDE (IntelliJ / VS Code / Eclipse)
 
-4. Compile and run:
-    javac Main.java
-    java Main
-5. Start adding users and tracking workouts!
+# 3. Navigate to:
+ThirdSemester/DSA Lab Codes/Lab Code/FinalLabproject/
 
-   🏅 Future Improvements
+# 4. Compile and run
+javac Main.java
+java Main
+
+🏅 Future Improvements
 
 GUI Interface using JavaFX or Swing
 
 Database integration (MySQL / SQLite)
 
-More workout types with dynamic MET
+More workout types with dynamic MET values
 
 Weekly/monthly progress graphs
 
 Export reports to PDF/CSV
-⭐ If you like this project, don't forget to star the repo!
+
+⭐ If you like this project, don’t forget to star the repo!
