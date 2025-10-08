@@ -1,6 +1,7 @@
 import java.util.*;
 import java.io.*;
 import java.time.LocalDate;
+import java.util.Scanner;
 
 class UserFitnessStats {
 
@@ -301,6 +302,126 @@ public class FitnessStatsTracker {
             System.out.println("-----------------------------");
             index++;
         }
+    }
+}
+
+class Main2 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        FitnessStatsTracker tracker = new FitnessStatsTracker();
+        boolean running = true;
+
+        while (running) {
+            System.out.println("\n================= 🏋️ FITNESS TRACKER MENU =================");
+            System.out.println("1️⃣  Add New User");
+            System.out.println("2️⃣  Add Workout Session");
+            System.out.println("3️⃣  Show All Users");
+            System.out.println("4️⃣  Show All Sessions");
+            System.out.println("5️⃣  Search User by ID");
+            System.out.println("6️⃣  Show Average BMI");
+            System.out.println("7️⃣  Filter Users by Calories Burned");
+            System.out.println("8️⃣  Remove Session");
+            System.out.println("9️⃣  Show Top Performers");
+            System.out.println("🔟  Count Users per Workout Type");
+            System.out.println("💾  Save Data to File");
+            System.out.println("0️⃣  Exit");
+            System.out.println("============================================================");
+            System.out.print("👉 Enter your choice: ");
+
+            int choice = sc.nextInt();
+            sc.nextLine(); // consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter User ID: ");
+                    String userId = sc.nextLine();
+
+                    System.out.print("Enter Name: ");
+                    String name = sc.nextLine();
+
+                    System.out.println("Workout Types: Cardio, Strength, Yoga, HIIT, Cycling, Walking");
+                    System.out.print("Enter Workout Type: ");
+                    String typeStr = sc.nextLine();
+                    UserFitnessStats.WorkoutType type = UserFitnessStats.WorkoutType.valueOf(typeStr);
+
+                    System.out.print("Enter Age: ");
+                    int age = sc.nextInt();
+
+                    System.out.print("Enter Duration (minutes): ");
+                    int duration = sc.nextInt();
+
+                    System.out.print("Enter Height (in feet): ");
+                    double height = sc.nextDouble();
+
+                    System.out.print("Enter Weight (in kg): ");
+                    double weight = sc.nextDouble();
+
+                    UserFitnessStats user = new UserFitnessStats(userId, name, type, age, duration, height, weight);
+                    tracker.addUser(user);
+                    break;
+
+                case 2:
+                    System.out.print("Enter User ID for session: ");
+                    String uid = sc.nextLine();
+                    tracker.addSession(uid);
+                    break;
+
+                case 3:
+                    tracker.searchUserById(""); // This can be replaced with your tracker.showAllUsers() if added
+                    break;
+
+                case 4:
+                    tracker.showAllSessions();
+                    break;
+
+                case 5:
+                    System.out.print("Enter User ID to search: ");
+                    String searchId = sc.nextLine();
+                    tracker.searchUserById(searchId);
+                    break;
+
+                case 6:
+                    double avgBmi = tracker.calculateAverageBMI();
+                    System.out.printf("📊 Average BMI of all users: %.2f%n", avgBmi);
+                    break;
+
+                case 7:
+                    System.out.print("Enter minimum calories burned to filter: ");
+                    double minCal = sc.nextDouble();
+                    tracker.displayUsersByCalories(minCal);
+                    break;
+
+                case 8:
+                    System.out.print("Enter session index to remove: ");
+                    int index = sc.nextInt();
+                    tracker.removeSession(index);
+                    break;
+
+                case 9:
+                    tracker.displayTopPerformers();
+                    break;
+
+                case 10:
+                    tracker.countUsersPerWorkoutType();
+                    break;
+
+                case 11:
+                    System.out.print("Enter file name to save data (e.g., data.csv): ");
+                    String fileName = sc.nextLine();
+                    tracker.saveDataToFile(fileName);
+                    break;
+
+                case 0:
+                    System.out.println("👋 Exiting Fitness Tracker... Stay Fit!");
+                    running = false;
+                    break;
+
+                default:
+                    System.out.println("⚠️ Invalid choice! Please try again.");
+            }
+        }
+
+        sc.close();
     }
 }
 
