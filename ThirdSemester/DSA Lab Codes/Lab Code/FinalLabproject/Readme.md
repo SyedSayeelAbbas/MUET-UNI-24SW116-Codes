@@ -1,67 +1,56 @@
 🏋️ Java Fitness Tracker
 
-A simple Fitness Tracking Application written in Java that helps users track their workouts, BMI, calories burned, and session history.
-This project is designed to practice OOP, ArrayList, and file handling concepts in Java.
+“Track your workouts. Know your numbers. Be your best.” 💪
 
-📌 Features
+
+A lightweight, console-based fitness tracker built with pure Java ☕.
+This project helps users track workouts, calculate BMI, estimate calories burned, and analyze performance — all using simple, clean code designed to practice DSA + OOP concepts.
+
+✨ Why This Project?
+
+✅ Simple to use
+🏋️ Fitness-focused logic (BMI, calories, MET)
+📊 Real-time session tracking with LocalDate
+🧠 Strengthens Java fundamentals (OOP + ArrayList + File Handling)
+💾 Data is saved locally for persistence
+
+🚀 Key Features
 👤 User Management
 
-Add, update, or remove users
+➕ Add, ✏️ Update, 🗑️ Remove users
 
-Automatically calculate BMI on registration
+💪 Auto-calculate BMI on registration
 
-Automatically calculate calories burned based on:
+🔥 Calculate calories burned based on workout type, BMI, age, and duration
 
-Workout type
+📝 Workout Sessions
 
-Age group
+🆕 Add new workout sessions
 
-BMI multiplier
+🕒 Auto-date sessions with LocalDate
 
-Duration
+🧾 Store & manage session history using ArrayList
 
-📝 Workout Session Management
+🗑️ Remove sessions by ID or index
 
-Add new workout sessions
+📅 Display all sessions with dates
 
-Auto-stamp sessions with the current date
+📊 Smart Statistics
 
-Store sessions using ArrayList
+🔍 Search user by ID
 
-Remove sessions by ID or index
+🧮 Calculate average BMI
 
-List all sessions with dates
+🔥 Filter users by calories burned
 
-🧮 Statistics & Reports
+🥇 Rank top performers
 
-Search user by ID
+📈 Count users per workout type
 
-Calculate Average BMI
+💾 Save data to file
 
-Filter users by calories burned
-
-Rank top performers 🥇
-
-Count users per workout type
-
-Save data to file for persistence
-
-🕒 Age & BMI Multiplier Logic
-Condition	Multiplier
-Age < 25	1.05
-Age > 45	0.95
-BMI > 25	1.10
-🧱 Project Structure
-📁 FitnessTrackerProject
-├── 📄 UserFitnessStats.java        # Stores user info, BMI & calories logic
-├── 📄 Session.java                 # Stores session details with date
-├── 📄 FitnessStatsTracker.java     # Core operations (CRUD, search, filter, stats)
-├── 📄 Main.java                    # Runs the program with a console menu
-├── 📄 users_data.txt               # Saved user data
-└── 📄 README.md
-
-🧮 Formula Used
-BMI
+🧮 Formulas Used
+🧠 BMI:
 BMI
 =
 Weight (kg)
@@ -73,7 +62,7 @@ BMI=
 Weight (kg)
 	​
 
-Calories Burned
+🔥 Calories Burned:
 Calories
 =
 MET
@@ -84,169 +73,58 @@ Duration (hours)
 ×
 Multiplier
 Calories=MET×Weight (kg)×Duration (hours)×Multiplier
+| Age   | Multiplier |
+| ----- | ---------- |
+| < 25  | 1.05       |
+| 25–45 | 1.00       |
+| > 45  | 0.95       |
+🏃 Workout MET Values
+| Workout Type | MET |
+| ------------ | --- |
+| 🏃 Running   | 8.0 |
+| 🚴 Cycling   | 6.0 |
+| 🚶 Walking   | 3.0 |
+| 🏋️ Strength | 5.0 |
+| 🧘 Yoga      | 2.5 |
+🧱 Project Structure
+📁 FitnessTrackerProject
+├── 📄 UserFitnessStats.java        # User data, BMI & calorie logic
+├── 📄 Session.java                 # Session details with date
+├── 📄 FitnessStatsTracker.java     # Core logic (CRUD, stats, filter)
+├── 📄 Main.java                    # Entry point (Console menu)
+├── 📄 users_data.txt               # Saved user data
+└── 📄 README.md
+🧠 Main Class (Entry Point)
 
-Where:
+The Main class provides a menu-driven console interface for user interaction.
 
-MET depends on Workout Type
+🪄 Menu Options
 
-Multiplier depends on Age & BMI
+1️⃣ Add New User
 
-🏃 Workout Types & MET Values
-Workout Type	MET
-Running	8.0
-Cycling	6.0
-Walking	3.0
-Strength	5.0
-Yoga	2.5
-🧠 Main Class – Program Entry Point
+2️⃣ Add Workout Session
 
-The Main class acts as the console-based interface of the Fitness Stats Tracker.
-It allows users to interact with the system through a simple, numbered menu.
+3️⃣ Show All Users
 
-✨ Features
+4️⃣ Show All Sessions
 
-🆕 Add new users
+5️⃣ Search User by ID
 
-🏋️ Add workout sessions
+6️⃣ Show Average BMI
 
-🔍 Search users by ID
+7️⃣ Filter Users by Calories
 
-📊 Calculate average BMI
+8️⃣ Remove Session
 
-🔥 Filter users by calories burned
+9️⃣ Show Top Performers
 
-📝 View and remove sessions
+🔟 Count Users per Workout Type
 
-🥇 Display top performers
+💾 Save Data
 
-📈 Count users per workout type
+0️⃣ Exit Program
 
-💾 Save data to file
-
-🚪 Exit the program
-
-🧾 Code: Main.java
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        FitnessStatsTracker tracker = new FitnessStatsTracker();
-        boolean running = true;
-
-        while (running) {
-            System.out.println("\n================= 🏋️ FITNESS TRACKER MENU =================");
-            System.out.println("1️⃣  Add New User");
-            System.out.println("2️⃣  Add Workout Session");
-            System.out.println("3️⃣  Show All Users");
-            System.out.println("4️⃣  Show All Sessions");
-            System.out.println("5️⃣  Search User by ID");
-            System.out.println("6️⃣  Show Average BMI");
-            System.out.println("7️⃣  Filter Users by Calories Burned");
-            System.out.println("8️⃣  Remove Session");
-            System.out.println("9️⃣  Show Top Performers");
-            System.out.println("🔟  Count Users per Workout Type");
-            System.out.println("💾  Save Data to File");
-            System.out.println("0️⃣  Exit");
-            System.out.println("============================================================");
-            System.out.print("👉 Enter your choice: ");
-
-            int choice = sc.nextInt();
-            sc.nextLine();
-
-            switch (choice) {
-                case 1:
-                    System.out.print("Enter User ID: ");
-                    String userId = sc.nextLine();
-
-                    System.out.print("Enter Name: ");
-                    String name = sc.nextLine();
-
-                    System.out.println("Workout Types: Cardio, Strength, Yoga, HIIT, Cycling, Walking");
-                    System.out.print("Enter Workout Type: ");
-                    String typeStr = sc.nextLine();
-                    UserFitnessStats.WorkoutType type = UserFitnessStats.WorkoutType.valueOf(typeStr);
-
-                    System.out.print("Enter Age: ");
-                    int age = sc.nextInt();
-
-                    System.out.print("Enter Duration (minutes): ");
-                    int duration = sc.nextInt();
-
-                    System.out.print("Enter Height (in feet): ");
-                    double height = sc.nextDouble();
-
-                    System.out.print("Enter Weight (in kg): ");
-                    double weight = sc.nextDouble();
-
-                    UserFitnessStats user = new UserFitnessStats(userId, name, type, age, duration, height, weight);
-                    tracker.addUser(user);
-                    break;
-
-                case 2:
-                    System.out.print("Enter User ID for session: ");
-                    String uid = sc.nextLine();
-                    tracker.addSession(uid);
-                    break;
-
-                case 3:
-                    tracker.userMap.forEach((id, u) -> System.out.println(u));
-                    break;
-
-                case 4:
-                    tracker.showAllSessions();
-                    break;
-
-                case 5:
-                    System.out.print("Enter User ID to search: ");
-                    String searchId = sc.nextLine();
-                    tracker.searchUserById(searchId);
-                    break;
-
-                case 6:
-                    double avgBmi = tracker.calculateAverageBMI();
-                    System.out.printf("📊 Average BMI of all users: %.2f%n", avgBmi);
-                    break;
-
-                case 7:
-                    System.out.print("Enter minimum calories burned to filter: ");
-                    double minCal = sc.nextDouble();
-                    tracker.displayUsersByCalories(minCal);
-                    break;
-
-                case 8:
-                    System.out.print("Enter session index to remove: ");
-                    int index = sc.nextInt();
-                    tracker.removeSession(index);
-                    break;
-
-                case 9:
-                    tracker.displayTopPerformers();
-                    break;
-
-                case 10:
-                    tracker.countUsersPerWorkoutType();
-                    break;
-
-                case 11:
-                    System.out.print("Enter file name to save data (e.g., data.csv): ");
-                    String fileName = sc.nextLine();
-                    tracker.saveDataToFile(fileName);
-                    break;
-
-                case 0:
-                    System.out.println("👋 Exiting Fitness Tracker... Stay Fit!");
-                    running = false;
-                    break;
-
-                default:
-                    System.out.println("⚠️ Invalid choice! Please try again.");
-            }
-        }
-
-        sc.close();
-    }
-}
-
-🧪 Sample Run
+🧾 Sample Run
 ================= 🏋️ FITNESS TRACKER MENU =================
 1️⃣  Add New User
 2️⃣  Add Workout Session
@@ -273,59 +151,67 @@ Weight: 108.3 kg
 
 💾 Data Persistence
 
-The application saves all user data in a .txt file so it can be retrieved later even after closing the program.
-Sessions can also be exported optionally.
+📝 All user data is saved to users_data.txt
 
-🚀 Tech Stack
+🔁 Sessions can also be exported or extended
 
-Language: Java (JDK 17+)
+🔒 Ensures your data isn’t lost between runs
 
-Concepts Used:
+# 1️⃣ Clone the repository
+git clone https://github.com/SyedSayeelAbbas/MUET-UNI-24SW116-Codes.git
 
-OOP (Classes, Objects, Encapsulation)
+# 2️⃣ Navigate to the project folder
+cd ThirdSemester/DSA\ Lab\ Codes/Lab\ Code/FinalLabproject/
 
-Inheritance & Composition
+# 3️⃣ Compile the project
+javac Main.java
 
-ArrayList & Loops
+# 4️⃣ Run the program
+java Main
+🧠 Tech Stack
 
-File Handling
+☕ Java 17+
 
-Java Time API (LocalDate)
+🧱 OOP (Encapsulation, Composition, Enum)
 
-🧑‍💻 Author
+🧮 Data Structures (ArrayList, Map)
+
+🗓️ Java Time API (LocalDate)
+
+💾 File Handling for persistence
+
+🏅 Future Enhancements
+
+🖼️ GUI Interface with JavaFX / Swing
+
+🗃️ Database integration (MySQL / SQLite)
+
+📊 Dynamic MET values
+
+📆 Progress charts & analytics
+
+📤 Export reports to PDF/CSV
+
+👨‍💻 Author
 
 Syed Sayeel Abbas
-📚 Software Engineering Student (2nd Semester)
+📚 Software Engineering Student | MUET
 💻 Passionate about Java, OOP & Web Development
+⭐ GitHub
 
 📝 License
 
 This project is open source and available under the MIT License
 .
 
-⭐ How to Run
-# 1. Clone the repo
-git clone https://github.com/SyedSayeelAbbas/MUET-UNI-24SW116-Codes.git
+🌟 Support the Project
 
-# 2. Open the project in any IDE (IntelliJ / VS Code / Eclipse)
+If you like this project:
 
-# 3. Navigate to:
-ThirdSemester/DSA Lab Codes/Lab Code/FinalLabproject/
+⭐ Star the repo
 
-# 4. Compile and run
-javac Main.java
-java Main
+🍴 Fork it & improve
 
-🏅 Future Improvements
+🐛 Open issues or PRs to contribute
 
-GUI Interface using JavaFX or Swing
-
-Database integration (MySQL / SQLite)
-
-More workout types with dynamic MET values
-
-Weekly/monthly progress graphs
-
-Export reports to PDF/CSV
-
-⭐ If you like this project, don’t forget to star the repo!
+“Small progress is still progress — track it, improve it, own it.” 🫡
