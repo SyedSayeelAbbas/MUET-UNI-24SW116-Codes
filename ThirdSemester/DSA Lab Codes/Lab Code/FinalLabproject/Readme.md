@@ -1,213 +1,119 @@
-🏋️ 🚀 JAVA FITNESS TRACKER — Your Smart Workout Companion! 💪
+🏋️‍♂️ Fitness Stats Tracker
 
-A simple yet powerful Java-based fitness tracking system to log sessions, calculate stats like BMI & calories burned, rank top performers, and keep your fitness journey organized.
+A Java console-based application for tracking user fitness stats and workout sessions.
 
-✨ Why This Project?
+This project was developed as a 3rd Semester DSA practical project at MUET, Jamshoro, to demonstrate the use of Data Structures and Algorithms (HashMap, ArrayList) in real-world applications.
 
-✅ Simple to use
-🏋️ Fitness-focused logic (BMI, calories, MET)
-📊 Real-time session tracking with LocalDate
-🧠 Strengthens Java fundamentals (OOP + ArrayList + File Handling)
-💾 Data is saved locally for persistence
+📌 Features
 
-🚀 Key Features
-👤 User Management
+The Fitness Stats Tracker allows users to:
 
-➕ Add, ✏️ Update, 🗑️ Remove users
+Add new users with details like ID, name, age, height, weight, and workout type.
 
-💪 Auto-calculate BMI on registration
+Log workout sessions including duration, calories burned, and BMI.
 
-🔥 Calculate calories burned based on workout type, BMI, age, and duration
+View all registered users and their fitness stats.
 
-📝 Workout Sessions
+Display all workout sessions.
 
-🆕 Add new workout sessions
+Search for users by User ID.
 
-🕒 Auto-date sessions with LocalDate
+Calculate the average BMI of all users.
 
-🧾 Store & manage session history using ArrayList
+Filter users based on calories burned.
 
-🗑️ Remove sessions by ID or index
+Remove or update specific workout sessions.
 
-📅 Display all sessions with dates
+Rank users to show top performers.
 
-📊 Smart Statistics
+Count users in different BMI categories.
 
-🔍 Search user by ID
+Count users per workout type.
 
-🧮 Calculate average BMI
+Load user data automatically from a CSV file.
 
-🔥 Filter users by calories burned
+Exit the application safely through a menu-driven interface.
 
-🥇 Rank top performers
+🛠️ Technologies Used
 
-📈 Count users per workout type
+Java – Core programming language.
 
-💾 Save data to file
+HashMap – Fast lookup and updates for user fitness data.
 
-🧮 Formulas Used
-🧠 BMI:
-BMI
-=
-Weight (kg)
-(Height (m))
-2
-BMI=
-(Height (m))
-2
-Weight (kg)
-	​
+ArrayList – Storing multiple workout sessions efficiently.
 
-🔥 Calories Burned:
-Calories
-=
-MET
-×
-Weight (kg)
-×
-Duration (hours)
-×
-Multiplier
-Calories=MET×Weight (kg)×Duration (hours)×Multiplier
-| Age   | Multiplier |
-| ----- | ---------- |
-| < 25  | 1.05       |
-| 25–45 | 1.00       |
-| > 45  | 0.95       |
-🏃 Workout MET Values
-| Workout Type | MET |
-| ------------ | --- |
-| 🏃 Running   | 8.0 |
-| 🚴 Cycling   | 6.0 |
-| 🚶 Walking   | 3.0 |
-| 🏋️ Strength | 5.0 |
-| 🧘 Yoga      | 2.5 |
-🧱 Project Structure
-📁 FitnessTrackerProject
-├── 📄 UserFitnessStats.java        # User data, BMI & calorie logic
-├── 📄 Session.java                 # Session details with date
-├── 📄 FitnessStatsTracker.java     # Core logic (CRUD, stats, filter)
-├── 📄 Main.java                    # Entry point (Console menu)
-├── 📄 users_data.txt               # Saved user data
-└── 📄 README.md
-🧠 Main Class (Entry Point)
+Scanner – Console input handling.
 
-The Main class provides a menu-driven console interface for user interaction.
+📐 How It Works
 
-🪄 Menu Options
+User Registration: Add personal info. BMI is calculated automatically. Data stored in a HashMap.
 
-1️⃣ Add New User
+Workout Sessions: Sessions include type, duration, calories, and BMI. Stored in ArrayList.
 
-2️⃣ Add Workout Session
+Data Analysis: Calculate average BMI, filter users, count BMI/workout type categories, rank top performers.
 
-3️⃣ Show All Users
+Search, Update, Delete: Users and sessions can be searched, updated, or removed easily.
 
-4️⃣ Show All Sessions
+Menu Interface: All features are accessible via a simple number-based menu.
 
-5️⃣ Search User by ID
+🧮 Formulas
 
-6️⃣ Show Average BMI
+BMI: BMI = Weight (kg) / (Height (m))²
 
-7️⃣ Filter Users by Calories
+Calories Burned: Calories = MET × Weight (kg) × Duration (hours)
 
-8️⃣ Remove Session
+MET values vary by workout type (Cardio, Strength, Yoga, HIIT, Cycling, Walking) and are adjusted based on age and BMI.
 
-9️⃣ Show Top Performers
+💡 Sample Test Case
 
-🔟 Count Users per Workout Type
+Input:
 
-💾 Save Data
+User: Ali (ID: U001), Age 21, Height 5.7 ft, Weight 70 kg
 
-0️⃣ Exit Program
+Workout: Cardio, Duration 60 min
 
-🧾 Sample Run
-================= 🏋️ FITNESS TRACKER MENU =================
-1️⃣  Add New User
-2️⃣  Add Workout Session
-3️⃣  Show All Users
-4️⃣  Show All Sessions
-5️⃣  Search User by ID
-6️⃣  Show Average BMI
-7️⃣  Filter Users by Calories Burned
-8️⃣  Remove Session
-9️⃣  Show Top Performers
-🔟  Count Users per Workout Type
-💾  Save Data to File
-0️⃣  Exit
-============================================================
-👉 Enter your choice: 1
-Enter User ID: U001
-Enter Name: Sayeel
-Workout Type: Cardio
-Age: 20
-Duration: 45 min
-Height: 6.3 ft
-Weight: 108.3 kg
-✅ User added successfully!
+Output:
 
-💾 Data Persistence
+BMI: 24.1 (Normal)
 
-📝 All user data is saved to users_data.txt
+Calories Burned: 514.5 kcal
 
-🔁 Sessions can also be exported or extended
+Session recorded successfully
 
-🔒 Ensures your data isn’t lost between runs
+User added to top performers list
 
-# 1️⃣ Clone the repository
-git clone https://github.com/SyedSayeelAbbas/MUET-UNI-24SW116-Codes.git
+🧩 OOP Concepts
 
-# 2️⃣ Navigate to the project folder
-cd ThirdSemester/DSA\ Lab\ Codes/Lab\ Code/FinalLabproject/
+Encapsulation: Private attributes with getters/setters.
 
-# 3️⃣ Compile the project
-javac Main.java
+Abstraction: BMI and calorie calculations hidden in methods.
 
-# 4️⃣ Run the program
-java Main
-🧠 Tech Stack
+Composition: FitnessStatsTracker uses UserFitnessStats and Session objects.
 
-☕ Java 17+
+Modularity: Separate classes for readability and maintenance.
 
-🧱 OOP (Encapsulation, Composition, Enum)
+🚀 Project Scope
 
-🧮 Data Structures (ArrayList, Map)
+Personal fitness tracking.
 
-🗓️ Java Time API (LocalDate)
+Gym and training center management.
 
-💾 File Handling for persistence
+Workout data analysis and reporting.
 
-🏅 Future Enhancements
+Academic demonstration of DSA in practical applications.
 
-🖼️ GUI Interface with JavaFX / Swing
+🌱 Future Improvements
 
-🗃️ Database integration (MySQL / SQLite)
+Load/save data automatically from CSV or database.
 
-📊 Dynamic MET values
+Add a GUI using JavaFX or Swing.
 
-📆 Progress charts & analytics
+Include graphs/charts for BMI and calories.
 
-📤 Export reports to PDF/CSV
+Integrate machine learning to predict calorie trends.
 
-👨‍💻 Author
+👥 Group Members
 
-Syed Sayeel Abbas
-📚 Software Engineering Student | MUET
-💻 Passionate about Java, OOP & Web Development
-⭐ GitHub
+Syed Sayeel Abbas (24SW116) – Developer
 
-📝 License
-
-This project is open source and available under the MIT License
-.
-
-🌟 Support the Project
-
-If you like this project:
-
-⭐ Star the repo
-
-🍴 Fork it & improve
-
-🐛 Open issues or PRs to contribute
-
-“Small progress is still progress — track it, improve it, own it.” 🫡
+Waseem (24SW164) – Tester
