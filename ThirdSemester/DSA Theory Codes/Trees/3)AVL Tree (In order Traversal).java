@@ -31,7 +31,7 @@ public class AVLTree {
         return oldSize < size();
     }
 
-    // Recursive insertion (returns updated subtree)
+    // Recursive insertion
     public AVLTree grow(int key) {
         if (this == NIL) return new AVLTree(key);
         if (key == this.key) return this;
@@ -46,51 +46,53 @@ public class AVLTree {
         return this;
     }
 
-    // Left rotation
+    // ---------- ROTATIONS (Simplified like your notebook) ----------
+
     private void rotateLeft() {
         AVLTree newLeft = new AVLTree(key, left, right.left);
         key = right.key;
         right = right.right;
         left = newLeft;
-        height = 1 + Math.max(left.height, right.height);
     }
 
-    // Right rotation
     private void rotateRight() {
         AVLTree newRight = new AVLTree(key, left.right, right);
         key = left.key;
         left = left.left;
         right = newRight;
-        height = 1 + Math.max(left.height, right.height);
     }
 
-    // Rebalance the tree
+    // ---------- REBALANCE (Simplified style) ----------
+
     private void rebalance() {
-        if (right.height > left.height + 1) { // Right heavy
+        if (right.height > left.height + 1) {
             if (right.left.height > right.right.height)
                 right.rotateRight();
             rotateLeft();
-        } else if (left.height > right.height + 1) { // Left heavy
+        }
+        else if (left.height > right.height + 1) {
             if (left.right.height > left.left.height)
                 left.rotateLeft();
             rotateRight();
         }
+
         height = 1 + Math.max(left.height, right.height);
     }
 
-    // Count number of nodes
+    // ---------- EXTRA HELPERS ----------
+
     public int size() {
         if (this == NIL) return 0;
         return 1 + left.size() + right.size();
     }
 
-    // Inorder traversal
     public String toString() {
         if (this == NIL) return "";
         return left + " " + key + " " + right;
     }
 }
 
+// ---------- MAIN ----------
 class Main {
     public static void main(String[] args) {
         AVLTree tree = new AVLTree(10);
